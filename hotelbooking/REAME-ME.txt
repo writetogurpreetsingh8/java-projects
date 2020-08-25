@@ -1,0 +1,30 @@
+Hi Team
+
+I have used spring-boot & java8 to develop this apis and I have used Swagger to test for the same
+
+Swagger url -> http://localhost:8080/hotelbooking/swagger-ui.html
+
+Validation and exception handling is there but due to time constraint I couldn't able to put logging and Junit for it
+Number of room in the hotel in configurable in the property file
+
+Some assumptions I have made while coding to make it simple :-
+ 
+1)  1.1) At a time only one hotel room can be associated with given Date
+			i.e  if we book room 101 for the date of 2020-08-23 and 
+			again try to book same room(101) for the date of 2020-08-24 
+			Then old booking would be overwrite
+	1.2) If we try to book same hotel room again for the dame date then
+			system would generate an exception as per requirments mentioned in the DOC
+
+2) System will only accept present/current or Future data , not accepting past-date anywhere in the system 	
+
+3) System would generate JSON as response either success or failure
+
+
+To review the code easly, import it into eclipse/STS and run through maven commands
+i.e mvn spring-boot:run
+
+I have also provided the jar file named hotelbooking.txt , just need to change its extension (txt to jar) before execute
+
+on cmd-promt -> java -jar hotelbooking.jar
+
