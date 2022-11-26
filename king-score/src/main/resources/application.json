@@ -1,0 +1,6 @@
+{
+	"serverPort": 1010,
+	"webContext": "/king",
+	"backlog": 10,
+	"sessionValidUptoMins": 10
+}
