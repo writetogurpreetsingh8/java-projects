@@ -1,16 +1,16 @@
 Hey:) 
 Hope you all are doing great!!
-I am mentioning few deatils of this Project , I have given the name as "king-score"
+I am mentioning few details of this Project , I have given the name as "king-score"
 
 JAVA-Version:- 8
 Build-Tool:- Maven
 
 1) HOW To Build
 -----------------
-Along with the source-code I will be sending the jar file also named king-score.jar in case if there is any problem to execute it, you can directly execute the jar
+Along with the source-code I will be sending the jar file also named king-score.jar in case if there is any problem to import source-code, you can directly execute the jar
 
- Import score-code in any IDE ( I Pefer Eclipse /  Intellji ) or you can use CMD , open CMD go to the location of "pom.xml" then execute mvn clean install command it will clean compile build and insall the jar 
- in side target you will see "king-score.jar" file there
+ Either you can Import score-code in any IDE ( I prefer Eclipse /  Intellji ) or you can use CMD , open CMD go to the location of "pom.xml" then execute mvn clean install command it will clean compile & build the jar 
+ in side target folder, you will see "king-score.jar" file inside target folder of king-score project
 
 2) HOW TO START
 ---------------------------
@@ -20,24 +20,22 @@ I have create application.json file to store few basic details of this project l
 	"webContext": "/king", // I have used king as webContext/webRoot
 	"backlog": 10, // request backlog 
 	"sessionValidUptoMins": 10, // session valid time in mins
-	"evictObsoleteSessionAfterEveryMins": 60
 }
 
 king-score.jar would need this file while executing so put this file in the same folder where you have put the jar file
  
 3) Thoughts and considerations around the program
 ----------------------------------------------------------
-We would have three following url:-
-A) http://localhost:1010/<userid>login
-B) http://localhost:1010/<levelid>/score?sessionkey=<sessionkey>
-C) http://localhost:1010/<levelid>/highscorelist
+We would have three following URL:-
+A) http://localhost:1010/king-score/<userid>/login   => GET Request 
+B) http://localhost:1010/king-score/<levelid>/score?sessionkey=<sessionkey>  => POST Request
+C) http://localhost:1010/king-score/<levelid>/highscorelist   => GET Request
 
 
-A) http://localhost:1010/<userid>login => It will create the user in the memory and it's session also then
-
-return session-id for subsequent requests , if same user invoke this url multiple time I consider it same user
-has loggedin from different machine/browser so I didn't override existing session instead I create different user
-with the same userId but different session-id ( I know this is GET request not POST but there is not such default
+A) http://localhost:1010/king-score/<userid>/login => It will create the user as well as it's session in the memory and 
+return session-id for subsequent requests , if same user invoke this URL multiple time I would consider that same user
+has loggedIn from different machine/browser So I didn't override existing session instead I create New user
+with the same userId but having different session-id ( I know this is GET request not POST but there is not such default
 user in the memory so I decided to create the User(s) on the fly instead of having default user in memory ) 
 
 follow below structure for user , session and levelid
@@ -64,14 +62,14 @@ i have used ConcurrentHashMap to store the session in memory whenever need to ac
 ConcurrentHashMap to get it back!!
 
 
-B) http://localhost:1010/<levelid>/score?sessionkey=<sessionkey> 
+B) http://localhost:1010/king-score/<levelid>/score?sessionkey=<sessionkey> 
 Request body: <score>                                         
 => It will first check whether session key exist or not if exist session shouldn't be obsolete otherwise it will be removed from MAP and return 401 
 
 if all goes fine then it will create level for particular user and assign the score for given Level 
 
 
-C) http://localhost:1010/<levelid>/highscorelist  => It will also first check whether sessions exist or not if exist sessions shouldn't be obsolete otherwise it will be removed from MAP and return 401 
+C) http://localhost:1010/king-score/<levelid>/highscorelist  => It will also first check whether sessions exist or not if exist sessions shouldn't be obsolete otherwise it will be removed from MAP and return 401 
 
 after that it will accumulate all the scores of level of all the users but not more than 15 as per requirement
 and return CSV as a key=value pair
@@ -84,14 +82,15 @@ sample data like
 103=
 104=2341
 
-or not such score or level found for given levelid for any user
+and not such score found or level not found for given levelid for any user
 then empty string will return 
 
 
 HOPE, I HAVE MADE MYSELF CLEAR , 
 
-I have completed the assignment as per the requirements mentioned but unfortunately I couldn't able to implement
-Junit since last 3/4 days I wasn't well at all, somehow I tried to finish the actual code part
+I have completed the assignment as per the requirements mentioned but unfortunately due to time constraint I couldn't able to implement Junit
 I would request you to review it!!
 
-Rest we can discuss if we will further Thanks!! :) 
+Rest we can discuss further Thanks!! :) 
+
+											HAPPY CODING :) :) 

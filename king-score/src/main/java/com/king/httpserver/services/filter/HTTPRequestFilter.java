@@ -53,25 +53,27 @@ public class HTTPRequestFilter extends Filter{
 		final String query = requestedUri.getRawQuery();   
 		
 		exchange.setAttribute("requestParameters", parameters);
-		
-		if (HTTPMethod.GET.name().equalsIgnoreCase(exchange.getRequestMethod())) {
+		if (HTTPMethod.GET.name().equalsIgnoreCase(exchange.getRequestMethod())
+				&& (requestedUri.getPath().endsWith("/login") || requestedUri.getPath().endsWith("/highscorelist"))) {
 			LOGGER.info("GET Request from {} ",requestedUri);
 	        if(query != null) {
 	        	parseQuery(query, parameters);
 	        }
+	        parseUrlEncodedParameters(exchange);
 		}
-		else if (HTTPMethod.POST.name().equalsIgnoreCase(exchange.getRequestMethod())) {
+		else if (HTTPMethod.POST.name().equalsIgnoreCase(exchange.getRequestMethod()) 
+				&& requestedUri.getPath().endsWith("/score")) {
 			LOGGER.info("POST Request from {} ",requestedUri);
 			 parseQuery(query, parameters);
              InputStreamReader isr =
                 new InputStreamReader(exchange.getRequestBody(),Constant.UTF_8);
              parameters.put("scores", new BufferedReader(isr).readLine());
-			
+             parseUrlEncodedParameters(exchange);
 		}else {
 			parameters.put("errorCode", HTTPStatusCode.CLIENT_ERROR_405_METHOD_NOT_ALLOWED.STATUS_CODE);
 			parameters.put("errorMessage", HTTPStatusCode.CLIENT_ERROR_405_METHOD_NOT_ALLOWED.MESSAGE);
 		}
-		parseUrlEncodedParameters(exchange);
+		
 	}
 
     /*

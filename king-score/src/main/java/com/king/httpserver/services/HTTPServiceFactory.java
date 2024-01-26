@@ -5,9 +5,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.king.httpserver.services.createscore.HTTPCreateScoreService;
+import com.king.httpserver.services.getscore.HTTPHighestScoreListService;
+import com.king.httpserver.services.login.HTTPLoginService;
+
 /**
  * HTTPServiceFactory based on Factory design pattern to create the
- * HTTPService's instance i.e HTTPLoginService, HTTPCreateScoreService, HTTPHighestScoreListService & HTTPBadService etc
+ * HTTPService's instance i.e HTTPScoreService, HTTPCreateScoreService, HTTPHighestScoreListService & HTTPBadService etc
  * by using their appropriate singleton static methods
  *
  */

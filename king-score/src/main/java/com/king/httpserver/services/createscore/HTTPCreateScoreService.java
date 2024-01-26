@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.king.httpserver.services;
+package com.king.httpserver.services.createscore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,21 +11,12 @@ import com.king.httpserver.core.DataAccessor;
 import com.king.httpserver.core.HTTPSession;
 import com.king.httpserver.request.HTTPRequest;
 import com.king.httpserver.response.HTTPResponse;
+import com.king.httpserver.services.AbstractHTTPService;
 import com.king.httpserver.services.filter.HTTPStatusCode;
 
-class HTTPCreateScoreService extends AbstractHTTPService {
+public class HTTPCreateScoreService extends AbstractHTTPService {
 
-	private static final long serialVersionUID = 4550811853931862020L;
 	private final static Logger LOGGER = LoggerFactory.getLogger(HTTPCreateScoreService.class);
-
-	// prevent from reflection
-	private HTTPCreateScoreService() throws HTTPServiceInstantiationException {
-		if (getInstance() != null) {
-			LOGGER.error("HTTPCreateScoreService is singleton by designed, can't make it clone... ");
-			throw new HTTPServiceInstantiationException(new IllegalAccessException(Constant.REQUIRED_SINGLETON));
-		}
-		LOGGER.debug("HTTPCreateScoreService is initialized....... ");
-		}
 
 	// thread safe implementation by static inner class
 	private static class HTTPCreateScoreServiceSingleton {

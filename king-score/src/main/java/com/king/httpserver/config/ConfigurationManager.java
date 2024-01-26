@@ -1,4 +1,4 @@
-package com.king.httpserver;
+package com.king.httpserver.config;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.king.httpserver.HTTPConfigurationException;
 
 /**
  * use to load the application.json file and provide the Configuration instance
@@ -33,7 +34,7 @@ public class ConfigurationManager{
      *  Used to load a configuration file by the path provided
      * @throws HTTPConfigurationException 
      */
-    void loadConfiguration(String filePath)  {
+    public void loadConfiguration(String filePath)  {
     	LOGGER.debug("Loading Server Configuration... ");
         FileReader fileReader = null;
         ObjectMapper myObjectMapper = defaultObjectMapper();

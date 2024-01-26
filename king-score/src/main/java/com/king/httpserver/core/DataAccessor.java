@@ -1,6 +1,5 @@
 package com.king.httpserver.core;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,34 +14,18 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.king.httpserver.ConfigurationManager;
-import com.king.httpserver.constants.Constant;
+import com.king.httpserver.config.ConfigurationManager;
 import com.king.httpserver.utils.SessionUtility;
 
 /**
- * 
  * DataAccessor hold some business logic to manipulate User's HTTPSession
  */
-public class DataAccessor implements Cloneable, Serializable {
+public class DataAccessor {
 	
-	private static final long serialVersionUID = 8516995693711475015L;
-	private final static Logger LOGGER = LoggerFactory.getLogger(DataAccessor.class);
-
 	private Lock readLock;
 	private Lock writeLock;
 
-	// prevent from reflection
-	private DataAccessor() throws HTTPServerException {
-		
-		LOGGER.debug("DataAccessor is initialized....... ");
-
-		if (getInstance() != null) {
-			LOGGER.error("DataAccessor is singleton by designed, can't make it clone... ");
-			throw new HTTPServerException(new IllegalAccessException(Constant.REQUIRED_SINGLETON));
-		}
+	private DataAccessor() {
 		ReadWriteLock readWriteLock = new ReentrantReadWriteLock(true);
 		this.readLock = readWriteLock.readLock();
 		this.writeLock = readWriteLock.writeLock();
@@ -61,14 +44,12 @@ public class DataAccessor implements Cloneable, Serializable {
 	public HTTPSession addNewHTTPSession() {
 		
 		final HTTPSession session = new HTTPSession();
-		
 		session.set_id(SessionUtility.generateSessionKey());
 		session.setCreatedOn(Instant.now());
 		session.setValidateUpto(SessionUtility.addTimeIntoCurrentTime(
 				ConfigurationManager.getInstance().getConfiguration().getSessionValidUptoMins(),
 				session.getCreatedOn()));
 		HTTPSessionsHolder.getSessions().put(session.get_id(), session);
-	
 		return session;
 	}
 
@@ -92,7 +73,6 @@ public class DataAccessor implements Cloneable, Serializable {
 	public boolean isSessionValid(final HTTPSession httpSession) {
 		return SessionUtility.isSessionValid(httpSession,Instant.now());
 	}
-
 	 
 	/**
 	 * if user already has level against given level id then update level with score
@@ -152,7 +132,7 @@ public class DataAccessor implements Cloneable, Serializable {
 		// tree-map to store user as key and value as highest score of each level
 		Map<Integer, Integer> highestScoresHolder = new TreeMap<Integer, Integer>();
 
-		int count = 15;
+		int scoreThreshold = ConfigurationManager.getInstance().getConfiguration().getScoreThreshold();
 		boolean isGivenLevelExist = false;
 		
 		while (itr.hasNext()) {
@@ -168,8 +148,8 @@ public class DataAccessor implements Cloneable, Serializable {
 				// identify whether user have submitted the score for level or not
 				highestScoresHolder.put(session.getUser().getUserId(), -1);
 			}
-			count--;
-			if (count == 0) {
+			scoreThreshold--;
+			if (scoreThreshold == 0) {
 				break;
 			}
 		}
@@ -221,16 +201,5 @@ public class DataAccessor implements Cloneable, Serializable {
 			this.readLock.unlock();
 		}
 		return value;
-	}
-	
-	// return same instance while trying to Deserialize
-	protected Object readResolve() {
-		return getInstance();
-	}
-
-	@Override
-	public Object clone() throws CloneNotSupportedException {
-		LOGGER.error("DataAccessor is singleton by designed, can't make it clone... ");
-		throw new CloneNotSupportedException(Constant.CLONE_NOT_SUPPORTED);
 	}
 }

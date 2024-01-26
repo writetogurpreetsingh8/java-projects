@@ -8,7 +8,6 @@ public class HTTPResponse {
 	private String httpResponseMessage;
 	private Headers httpHeader;
 	
-	
 	public HTTPResponse(Headers httpHeader) {
 		super();
 		this.httpHeader = httpHeader;

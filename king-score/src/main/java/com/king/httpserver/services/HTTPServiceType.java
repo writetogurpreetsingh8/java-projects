@@ -1,4 +1,5 @@
 package com.king.httpserver.services;
+
 public enum HTTPServiceType {
 	
 	LOGIN_SERVICE("login"),
