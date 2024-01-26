@@ -86,11 +86,6 @@ and not such score found or level not found for given levelid for any user
 then empty string will return 
 
 
-HOPE, I HAVE MADE MYSELF CLEAR , 
+HOPE, I HAVE MADE MYSELF CLEAR!!
 
-I have completed the assignment as per the requirements mentioned but unfortunately due to time constraint I couldn't able to implement Junit
-I would request you to review it!!
-
-Rest we can discuss further Thanks!! :) 
-
-											HAPPY CODING :) :) 
+					HAPPY CODING :) :) 
