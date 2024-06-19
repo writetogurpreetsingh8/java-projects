@@ -1,0 +1,3 @@
+CyclicBarriers are used in programs in which we have a fixed number of threads that must wait for each 
+other to reach a common point before continuing execution of other program logic..
+

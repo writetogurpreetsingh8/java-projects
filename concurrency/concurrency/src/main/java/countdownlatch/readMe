@@ -1,0 +1,3 @@
+By using a CountDownLatch we can cause a thread to block until other threads have completed a given task.
+Instead of blocking a parent thread until some child threads have finished. 
+use a CountDownLatch in order to block a thread until other threads have finished some processing
