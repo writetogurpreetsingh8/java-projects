@@ -18,22 +18,21 @@ class Buffer{
 	}
 	
 	public void readData(){
-		
+		System.out.println("entered into readData() method... "+Thread.currentThread().getName());
 		readLock.lock();
-		System.out.println("readData() method");
-		System.out.println("calling readData().....");
-		writeData();
+		System.out.println("calling writeData().....");
+		//writeData();
 		readLock.unlock();
 		
 	}
 	
 	public void writeData(){
+		System.out.println("entered into writeData() method.. "+Thread.currentThread().getName());
 		writeLock.lock();
-		System.out.println("writeData() method");
-		//readLock.unlock();
-		
+		readData();
+		System.out.println("writeData() method "+Thread.currentThread().getName());
+		writeLock.unlock();
 	}
-	
 }
 
 class ReadThread extends Thread{
@@ -79,7 +78,7 @@ public class ReadWriteLocks {
 		readThread.setPriority(10);
 		writeThread.setPriority(1);
 		
-		readThread.start();
+		//readThread.start();
 		writeThread.start();
 
 		/*java.util.concurrent.locks.ReadWriteLock lock1 = new ReentrantReadWriteLock(true);

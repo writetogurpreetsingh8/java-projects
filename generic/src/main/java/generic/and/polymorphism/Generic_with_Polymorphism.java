@@ -58,7 +58,7 @@ public class Generic_with_Polymorphism {
 		//list1.add(new Animal());
 		//list1.add(new Object());
 
-	//	List<? super Animal> list2 = new ArrayList<Dog>();
+		//List<? super Animal> list2 = new ArrayList<Dog>();
 		
 		//List<? extends Dog> list3 = new ArrayList<Animal>();
 
