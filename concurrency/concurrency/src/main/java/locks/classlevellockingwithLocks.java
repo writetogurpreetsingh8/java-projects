@@ -80,7 +80,7 @@ class t1 extends Thread{
 		
 			try {
 				System.out.println("thread t1 has started.......");
-				r.starting(5);
+				r.display1(5);
 				System.out.println("thread t1 has ended.......");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -97,7 +97,7 @@ class t2 extends Thread{
 	}
 	public void run(){
 			try {
-				r.show(5);
+				r.display(5);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

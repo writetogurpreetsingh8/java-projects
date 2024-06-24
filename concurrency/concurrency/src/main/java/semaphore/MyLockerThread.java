@@ -2,11 +2,10 @@ package semaphore;
 
 import java.util.concurrent.Semaphore;
 
-public class MyLockerThread extends Thread{
+public class MyLockerThread extends Thread {
 	
 	private Semaphore semaphore; 
-	ConcurrentLinkedQueue
-	String name = "";
+	String name;
 
 	MyLockerThread(String name,Semaphore semaphore) {
 		this.name = name;

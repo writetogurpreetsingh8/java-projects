@@ -10,7 +10,7 @@ public class testsemaphores {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 		
-		Semaphore semaphore = new Semaphore(2);
+		Semaphore semaphore = new Semaphore(1);
 		System.out.println("Total available Semaphore permits : "
 				+ semaphore.availablePermits());
 		

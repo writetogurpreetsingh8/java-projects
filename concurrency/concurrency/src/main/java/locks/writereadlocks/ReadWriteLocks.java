@@ -1,5 +1,6 @@
 package locks.writereadlocks;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -17,20 +18,21 @@ class Buffer{
 		writeLock = readWriteLock.writeLock();
 	}
 	
-	public void readData(){
+	public void readData() throws InterruptedException{
 		System.out.println("entered into readData() method... "+Thread.currentThread().getName());
+		//TimeUnit.SECONDS.sleep(2);
 		readLock.lock();
-		System.out.println("calling writeData().....");
-		//writeData();
+		System.out.println("got readLock & executing... readData().....");
+		writeData();
 		readLock.unlock();
-		
 	}
 	
-	public void writeData(){
+	public void writeData() throws InterruptedException{
 		System.out.println("entered into writeData() method.. "+Thread.currentThread().getName());
 		writeLock.lock();
-		readData();
-		System.out.println("writeData() method "+Thread.currentThread().getName());
+		System.out.println("got writeLock & executing writeData() method "+Thread.currentThread().getName());
+		TimeUnit.SECONDS.sleep(1);
+		//writeData();
 		writeLock.unlock();
 	}
 }
@@ -44,7 +46,12 @@ class ReadThread extends Thread{
 	}
 	
 	public void run(){
-		buffer.readData();
+		try {
+			buffer.readData();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
@@ -57,7 +64,12 @@ class WriteThread extends Thread{
 	}
 	
 	public void run(){
-		buffer.writeData();
+		try {
+			buffer.writeData();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
@@ -75,11 +87,11 @@ public class ReadWriteLocks {
 		ReadThread readThread = new ReadThread(buffer);
 		WriteThread writeThread = new WriteThread(buffer);
 		
-		readThread.setPriority(10);
-		writeThread.setPriority(1);
+		readThread.setPriority(1);
+		writeThread.setPriority(10);
 		
-		//readThread.start();
-		writeThread.start();
+		readThread.start();
+		//writeThread.start();
 
 		/*java.util.concurrent.locks.ReadWriteLock lock1 = new ReentrantReadWriteLock(true);
 		java.util.concurrent.locks.ReadWriteLock lock2 = new ReentrantReadWriteLock(true);
